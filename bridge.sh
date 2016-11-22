@@ -2,7 +2,7 @@
 
 function get_address() {
   addr=$(ifconfig $1 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
-  return "$addr"
+  echo "$addr"
 }
 
 function print_timestamp() {
