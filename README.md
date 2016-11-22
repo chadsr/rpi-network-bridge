@@ -20,10 +20,10 @@ For example interface configurations, look below, or do some Googling :)
 ```
 allow-hotplug eth0
 iface eth0 inet static
-    address 192.168.1.1
+    address 172.24.1.1
     netmask 255.255.255.0
-    network 192.168.1.0
-    broadcast 192.168.1.255
+    network 172.24.1.0
+    broadcast 172.24.1.255
 ```
 
 ### Example wlan0
