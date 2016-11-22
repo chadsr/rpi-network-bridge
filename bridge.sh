@@ -49,6 +49,9 @@ interface=$local_iface
 listen-address=$local_addr # Listen on local (non internet address)
 bind-interfaces      # Bind to the interface to make sure we arent sending things elsewhere
 server=8.8.8.8       # Forward DNS requests to Google DNS
+server=8.8.4.4       # Forward DNS requests to Google DNS
+no-poll
+no-resolv
 domain-needed        # Dont forward short names
 bogus-priv           # Never forward addresses in the non-routed address spaces.
 dhcp-range=$start_ip,$end_ip,$dhcp_lease_time
