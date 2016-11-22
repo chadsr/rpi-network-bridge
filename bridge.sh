@@ -9,7 +9,7 @@ function print_timestamp() {
   date "+%s"
 }
 
-echo "This script needs to be run with root priveledges (sudo $0)"
+echo "ATTENTION: This script needs to be run with root privileges (sudo $0)"
 echo
 
 echo "Enter the network interface which has Internet connection to forward. (e.g. wlan0): "
@@ -26,7 +26,7 @@ local_addr=$(get_address $local_iface)
 echo
 echo "Internet address is: "$inet_addr
 echo "Local address is: "$local_addr
-echo "If the above addresses look incorrect, something is wrong witht the interfaces you specified above. (or ifconfig is broken)"
+echo "If the above addresses look incorrect, something is wrong with the interfaces you specified above. (or ifconfig is broken)"
 echo
 
 # Lease time for IP addresses
