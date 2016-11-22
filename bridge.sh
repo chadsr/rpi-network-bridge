@@ -75,7 +75,7 @@ echo "Generating iptables"
 sudo iptables -t nat -A POSTROUTING -o $inet_iface -j MASQUERADE
 
 # Persistence
-echo 'iptables-save' | sudo tee /etc/iptables.ipv4.nat > /dev/null
+echo iptables-save | sudo tee /etc/iptables.ipv4.nat > /dev/null
 
 # Create hook
-echo 'iptables-restore < /etc/iptables.ipv4.nat' | sudo tee /lib/dhcpcd/dhcpcd-hooks/70-ipv4-nat > /dev/null
+echo iptables-restore < /etc/iptables.ipv4.nat | sudo tee /lib/dhcpcd/dhcpcd-hooks/70-ipv4-nat > /dev/null
