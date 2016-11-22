@@ -20,11 +20,8 @@ echo "Enter the local network interface you wish to forward to. (e.g. eth0): "
 read local_iface
 echo
 
-echo $inet_iface
-echo $local_iface
-
-inet_addr=get_address $inet_iface
-local_addr=get_address $local_iface
+inet_addr=$(get_address $inet_iface)
+local_addr=$(get_address $local_iface)
 
 echo
 echo "Internet address is: "$inet_addr
