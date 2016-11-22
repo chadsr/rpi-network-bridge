@@ -23,7 +23,6 @@ echo
 inet_addr=$(get_address $inet_iface)
 local_addr=$(get_address $local_iface)
 
-echo
 echo "Internet address is:" $inet_addr "(Doesn't matter if this is dynamic)"
 echo "Local address is: "$local_addr "(This should be the static IP you assigned!)"
 echo "If the above addresses look incorrect, something is wrong with the interfaces you specified above. (or ifconfig is broken)"
@@ -65,7 +64,7 @@ echo "Created backup of dnsmasq.conf"
 echo "$DNSMASQ_CONF" | sudo tee /etc/dnsmasq.conf > /dev/null
 echo "New dnsmasq.conf written to /etc/dnsmasq.conf"
 
-# Uncomment net.ipv4.ip_forward=1, if commented out
+# Uncomment net.ipv4.ip_fo0rward=1, if commented out
 sudo sed -i '/^#.* net.ipv4.ip_forward=1 /s/^#//' /etc/sysctl.conf
 echo "Uncommented net.ipv4.ip_forward=1 in /etc/sysctl.conf (If it wasn't already)"
 
@@ -75,7 +74,7 @@ echo "Generating iptables"
 sudo iptables -t nat -A POSTROUTING -o $inet_iface -j MASQUERADE
 
 # Persistence
-echo iptables-save | sudo tee /etc/iptables.ipv4.nat > /dev/null
+iptables-save | sudo tee /etc/iptables.ipv4.nat > /dev/null
 
 # Create hook
-echo iptables-restore < /etc/iptables.ipv4.nat | sudo tee /lib/dhcpcd/dhcpcd-hooks/70-ipv4-nat > /dev/null
+echo 'iptables-restore < /etc/iptables.ipv4.nat' | sudo tee /lib/dhcpcd/dhcpcd-hooks/70-ipv4-nat > /dev/null
