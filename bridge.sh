@@ -32,14 +32,17 @@ echo
 # Lease time for IP addresses
 echo "Enter a IP lease time for the DHCP server (e.g. 12h): "
 read dhcp_lease_time
+echo
 
 # trim the last octave of the local ip for example ranges
 base_ip=`echo $local_addr | cut -d"." -f1-3`
 
 echo "Enter a starting IP for the DHCP server to assign from. (e.g. $base_ip.50): "
 read start_ip
+echo
 echo "Enter a end IP for the DHCP server to assign to. (e.g. $base_ip.150): "
 read end_ip
+echo
 
 DNSMASQ_CONF="
 interface=$local_iface
