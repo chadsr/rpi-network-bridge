@@ -1,5 +1,4 @@
 #!/bin/bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function get_address() {
   addr=$(ifconfig $1 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
@@ -10,20 +9,28 @@ function print_timestamp() {
   date "+%s"
 }
 
-echo "This script needs to be run with root priveledges (sudo ./$0)\n"
+echo "This script needs to be run with root priveledges (sudo $0)"
+echo
 
 echo "Enter the network interface which has Internet connection to forward. (e.g. wlan0): "
 read inet_iface
+echo
 
 echo "Enter the local network interface you wish to forward to. (e.g. eth0): "
 read local_iface
+echo
+
+echo $inet_iface
+echo $local_iface
 
 inet_addr=get_address $inet_iface
 local_addr=get_address $local_iface
 
-echo "\nInternet address is: "$inet_addr
+echo
+echo "Internet address is: "$inet_addr
 echo "Local address is: "$local_addr
 echo "If the above addresses look incorrect, something is wrong witht the interfaces you specified above. (or ifconfig is broken)"
+echo
 
 # Lease time for IP addresses
 echo "Enter a IP lease time for the DHCP server (e.g. 12h): "
@@ -32,9 +39,9 @@ read dhcp_lease_time
 # trim the last octave of the local ip for example ranges
 base_ip=`echo $local_addr | cut -d"." -f1-3`
 
-echo "Enter a starting IP for the DHCP server to assign from: (e.g. $base_ip.50)\n"
+echo "Enter a starting IP for the DHCP server to assign from. (e.g. $base_ip.50): "
 read start_ip
-echo "Enter a end IP for the DHCP server to assign to: (e.g. $base_ip.150)\n"
+echo "Enter a end IP for the DHCP server to assign to. (e.g. $base_ip.150): "
 read end_ip
 
 DNSMASQ_CONF="
