@@ -24,8 +24,8 @@ inet_addr=$(get_address $inet_iface)
 local_addr=$(get_address $local_iface)
 
 echo
-echo "Internet address is: "$inet_addr
-echo "Local address is: "$local_addr
+echo "Internet address is:" $inet_addr "(Doesn't matter if this is dynamic)"
+echo "Local address is: "$local_addr "(This should be the static IP you assigned!)"
 echo "If the above addresses look incorrect, something is wrong with the interfaces you specified above. (or ifconfig is broken)"
 echo
 
@@ -65,7 +65,7 @@ echo "Uncommented net.ipv4.ip_forward=1 in /etc/sysctl.conf (If it wasn't alread
 
 # iptables
 echo "Generating iptables"
-sudo iptables -t nat -A POSTROUTING -o $INET_IFACE -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -o $inet_iface -j MASQUERADE
 
 # Persistence
 echo 'iptables-save' | sudo tee /etc/iptables.ipv4.nat > /dev/null
