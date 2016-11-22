@@ -67,6 +67,7 @@ sudo sed -i '/^#.* net.ipv4.ip_forward=1 /s/^#//' /etc/sysctl.conf
 echo "Uncommented net.ipv4.ip_forward=1 in /etc/sysctl.conf (If it wasn't already)"
 
 # iptables
+echo
 echo "Generating iptables"
 sudo iptables -t nat -A POSTROUTING -o $inet_iface -j MASQUERADE
 
