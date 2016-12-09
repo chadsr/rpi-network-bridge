@@ -1,5 +1,7 @@
 #!/bin/bash
 
+IPT=/sbin/iptables
+
 function get_address() {
   addr=$(ifconfig $1 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
   echo "$addr"
@@ -71,10 +73,27 @@ echo "Uncommented net.ipv4.ip_forward=1 in /etc/sysctl.conf (If it wasn't alread
 # iptables
 echo
 echo "Generating iptables"
-sudo iptables -t nat -A POSTROUTING -o $inet_iface -j MASQUERADE
+
+# Flush the tables
+$IPT -F INPUT
+$IPT -F OUTPUT
+$IPT -F FORWARD
+
+$IPT -t nat -P PREROUTING ACCEPT
+$IPT -t nat -P POSTROUTING ACCEPT
+$IPT -t nat -P OUTPUT ACCEPT
+
+# Allow forwarding packets:
+$IPT -A FORWARD -p ALL -i $local_iface -j ACCEPT
+$IPT -A FORWARD -i $inet_iface -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Packet masquerading
+$IPT -t nat -A POSTROUTING -o $inet_iface -j SNAT --to-source $inet_addr
 
 # Persistence
 iptables-save | sudo tee /etc/iptables.ipv4.nat > /dev/null
 
 # Create hook
 echo 'iptables-restore < /etc/iptables.ipv4.nat' | sudo tee /lib/dhcpcd/dhcpcd-hooks/70-ipv4-nat > /dev/null
+
+sysctl –system
