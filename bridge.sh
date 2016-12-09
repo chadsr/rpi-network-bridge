@@ -96,4 +96,4 @@ iptables-save | sudo tee /etc/iptables.ipv4.nat > /dev/null
 # Create hook
 echo 'iptables-restore < /etc/iptables.ipv4.nat' | sudo tee /lib/dhcpcd/dhcpcd-hooks/70-ipv4-nat > /dev/null
 
-sysctl –system
+sysctl --system
